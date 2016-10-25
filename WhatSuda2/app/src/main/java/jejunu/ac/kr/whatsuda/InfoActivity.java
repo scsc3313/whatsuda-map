@@ -7,7 +7,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -24,6 +26,8 @@ import java.util.ArrayList;
 public class InfoActivity extends AppCompatActivity {
 
     private ListView listView;
+    private ImageView imageView;
+    private TextView tvAverageCount, tvRealCount;
     private SearchBlogAdapter adapter;
     private static final String CLIENT_ID = "6Ympg8b1duWn3d4ExxuL";
     private static final String CLIENT_SECRET = "mmgt84pcvt";
@@ -35,10 +39,19 @@ public class InfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_info);
 
         listView = (ListView) findViewById(R.id.listView_search_blog);
+        imageView = (ImageView) findViewById(R.id.imageview);
+        tvAverageCount = (TextView) findViewById(R.id.tv_year_average_count);
+        tvRealCount = (TextView) findViewById(R.id.tv_real_count);
         arrayList = new ArrayList<>();
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("title");
+        String total = intent.getStringExtra("total");
+        int realCount = intent.getIntExtra("realCount", 0);
+        int imgId = intent.getIntExtra("img", R.drawable.ic_map_end);
+        tvAverageCount.setText(total);
+        tvRealCount.setText("" + realCount);
+        imageView.setImageResource(imgId);
         new SearchBlogTask(this).execute(name);
     }
 
@@ -150,7 +163,6 @@ public class InfoActivity extends AppCompatActivity {
             } catch (XmlPullParserException e) {
                 e.printStackTrace();
             }
-
 
             return null;
         }

@@ -60,22 +60,28 @@ public class CustomAdapter extends BaseAdapter {
             viewHolder.tvNumber = (TextView) v.findViewById(R.id.tv_num);
             viewHolder.tvName = (TextView) v.findViewById(R.id.tv_name);
             viewHolder.tvAverage = (TextView) v.findViewById(R.id.tv_average);
-            v.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, InfoActivity.class);
-                    intent.putExtra("title", getItem(position).getName());
-                    context.startActivity(intent);
-                }
-            });
+            viewHolder.tvRealCount = (TextView) v.findViewById(R.id.tv_real_count);
+
             v.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) v.getTag();
         }
-        LandMark item = getItem(position);
+        final LandMark item = getItem(position);
         viewHolder.tvName.setText(item.getName());
         viewHolder.tvNumber.setText(position + 1 + "");
         viewHolder.tvAverage.setText("연 평균 : " + decimalFormat.format(item.getCount()));
+        viewHolder.tvRealCount.setText("현재 이용객 : " + item.getRealCount());
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, InfoActivity.class);
+                intent.putExtra("title", item.getName());
+                intent.putExtra("total", decimalFormat.format(item.getCount()));
+                intent.putExtra("img", item.getImgId());
+                intent.putExtra("realCount", item.getRealCount());
+                context.startActivity(intent);
+            }
+        });
         return v;
     }
 
@@ -83,5 +89,6 @@ public class CustomAdapter extends BaseAdapter {
         public TextView tvNumber;
         public TextView tvName;
         public TextView tvAverage;
+        public TextView tvRealCount;
     }
 }

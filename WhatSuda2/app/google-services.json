@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "362775601965",
+    "firebase_url": "https://whatsuda-e26fb.firebaseio.com",
+    "project_id": "whatsuda-e26fb",
+    "storage_bucket": "whatsuda-e26fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:362775601965:android:fec850664463f74c",
+        "android_client_info": {
+          "package_name": "jejunu.ac.kr.whatsuda"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "362775601965-ie003jin79mbinhbiluvs0n1m2otglvv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEAEWMlvJ8-jL9kG8KqRuN3u8U51292mM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
