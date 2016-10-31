@@ -2,6 +2,8 @@ package jejunu.ac.kr.whatsuda;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
@@ -28,7 +30,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
@@ -109,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements
 
         // create GoogleApiClient
         createGoogleApi();
-        if(checkPermission())
+        if (checkPermission())
             getUUID();
 
         getSupportActionBar().setTitle("경로 추천");
@@ -146,17 +147,24 @@ public class MainActivity extends AppCompatActivity implements
     private void addPath(int start, int end, int color) {
 
         PolylineOptions options = new PolylineOptions();
-        BitmapDescriptor descriptor;
+        Bitmap bitmap;
         for (int i = start; i <= end; i++) {
             options.add(landMarkMap.get(i).getLatLng());
+            String drawableName;
             if (i == start) {
-                descriptor = BitmapDescriptorFactory.fromResource(R.drawable.ic_map_start);
+//                descriptor = BitmapDescriptorFactory.fromResource(R.drawable.ic_map_start);
+                bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.ic_map_start);
+                drawableName = "ic_map_start.png";
             } else if (i == end) {
-                descriptor = BitmapDescriptorFactory.fromResource(R.drawable.ic_map_end);
+//                descriptor = BitmapDescriptorFactory.fromResource(R.drawable.ic_map_end);
+                bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.ic_map_end);
             } else {
-                descriptor = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE);
+//                descriptor = BitmapDescriptorFactory.fromResource(R.drawable.ic_map_marker);
+                bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.ic_map_marker);
             }
-            markerForGeofence(landMarkMap.get(i), start, descriptor);
+            bitmap = Bitmap.createScaledBitmap(bitmap, 104, 172, false);
+
+            markerForGeofence(landMarkMap.get(i), start, bitmap);
             drawGeofence(landMarkMap.get(i).getLatLng());
         }
 
@@ -359,10 +367,10 @@ public class MainActivity extends AppCompatActivity implements
         } else askPermission();
     }
 
-    private void markerForGeofence(LandMark landMark, int tag, BitmapDescriptor descriptor) {
+    private void markerForGeofence(LandMark landMark, int tag, Bitmap bitmap) {
         MarkerOptions markerOptions = new MarkerOptions()
                 .position(landMark.getLatLng())
-                .icon(descriptor)
+                .icon(BitmapDescriptorFactory.fromBitmap(bitmap))
                 .title(landMark.getName());
         if (map != null) {
             map.addMarker(markerOptions).setTag(tag);
